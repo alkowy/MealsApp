@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/categoriesListFragment">
+    <fragment
+        android:id="@+id/categoriesListFragment"
+        android:name="com.example.mealsapp.presentation.categoriesList.CategoriesListFragment"
+        android:label="fragment_categories_list"
+        tools:layout="@layout/fragment_categories_list" >
+        <action
+            android:id="@+id/action_categoriesListFragment_to_mealsFromCategoryFragment"
+            app:destination="@id/mealsFromCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="com.example.mealsapp.presentation.mealDetail.MealDetailFragment"
+        android:label="fragment_meal_detail"
+        tools:layout="@layout/fragment_meal_detail" />
+    <fragment
+        android:id="@+id/mealsFromCategoryFragment"
+        android:name="com.example.mealsapp.presentation.mealsFromCategoryList.MealsFromCategoryFragment"
+        android:label="fragment_meals_from_category"
+        tools:layout="@layout/fragment_meals_from_category" >
+        <action
+            android:id="@+id/action_mealsFromCategoryFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
+</navigation>
