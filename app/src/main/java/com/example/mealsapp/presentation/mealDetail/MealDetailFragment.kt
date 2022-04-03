@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -23,31 +24,39 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.mealsapp.R
+import com.example.mealsapp.common.Constants
 import com.example.mealsapp.databinding.FragmentMealDetailBinding
 import com.example.mealsapp.domain.model.MealDetailModel
+import com.example.mealsapp.presentation.mealDetail.viewPagerFragments.MealIngredientsFragment
+import com.example.mealsapp.presentation.mealDetail.viewPagerFragments.MealInstructionsFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
 private var _binding: FragmentMealDetailBinding? = null
 private val binding get() = _binding!!
-private lateinit var navController: NavController
 private lateinit var mealDetailsId: String
+private lateinit var pagerAdapter: ViewPagerAdapter
 
 class MealDetailFragment : Fragment() {
     private val viewModel = hiltNavGraphViewModels<MealDetailViewModel>(R.id.nav_graph)
+    private lateinit var navController: NavController
+    private var fragmentList = mutableListOf<Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             mealDetailsId = it.get("meal_id") as String
         }
+        _binding = FragmentMealDetailBinding.inflate(layoutInflater)
+        navController = findNavController()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMealDetailBinding.inflate(layoutInflater)
-        navController = findNavController()
+
         return binding.root
     }
 
@@ -68,12 +77,28 @@ class MealDetailFragment : Fragment() {
                     }
                     if (state.mealDetail?.strMeal != null) {
                         val meal = state.mealDetail
+                        fragmentList.add(MealIngredientsFragment(meal))
+                        fragmentList.add(MealInstructionsFragment(meal))
+                        pagerAdapter = ViewPagerAdapter(fragmentList,requireActivity().supportFragmentManager,lifecycle)
+                        binding.mealDetailViewPager.adapter = pagerAdapter
+                        val tabLayout = binding.mealDetailsTabLayout
+                        val tabLayoutMediator = TabLayoutMediator(
+                            tabLayout,
+                            binding.mealDetailViewPager,
+                            object : TabLayoutMediator.TabConfigurationStrategy{
+                                override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
+                                    tab.text = Constants.tabNames[position]
+                                }
+                            }
+                        ).attach()
+
                         Glide.with(binding.root)
                             .load(meal.strMealThumb)
                             .into(binding.mealDetailImage)
 
                         binding.mealDetailName.text = meal.strMeal
                         binding.mealDetailInstructions.text = meal.strInstructions
+
                     }
                 }
             }
@@ -82,8 +107,5 @@ class MealDetailFragment : Fragment() {
 
     }
 
-    private fun bindMealToViews(meal: MealDetailModel) {
-
-    }
 
 }
