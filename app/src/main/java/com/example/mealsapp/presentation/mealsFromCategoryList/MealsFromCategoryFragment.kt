@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentMealsFromCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private var _binding: FragmentMealsFromCategoryBinding? = null
@@ -64,17 +65,16 @@ class MealsFromCategoryFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.value.state.collect { state ->
                     if (state.isLoading) {
-                        Log.d("MealsFromCategory1", state.toString())
                         binding.recyclerViewMealsInCategory.visibility = View.INVISIBLE
                     }
                     if (state.error.isNotBlank()) {
-                        Log.d("MealsFromCategory2", state.toString())
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.mealsFromCategory.isNotEmpty()) {
-                        Log.d("MealsFromCategory3", state.toString())
-                        binding.recyclerViewMealsInCategory.visibility = View.VISIBLE
                         mealsAdapter.setMeals(state.mealsFromCategory)
                         rvMeals.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+                        delay(300)
+                        binding.mealsFromCategoryProgressBar.visibility = View.INVISIBLE
+                        binding.mealsFromCategoryGroup.visibility = View.VISIBLE
                     }
                 }
             }

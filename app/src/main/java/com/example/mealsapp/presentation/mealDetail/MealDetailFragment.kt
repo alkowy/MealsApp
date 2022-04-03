@@ -20,6 +20,7 @@ import com.example.mealsapp.presentation.mealDetail.viewPagerFragments.MealIngre
 import com.example.mealsapp.presentation.mealDetail.viewPagerFragments.MealInstructionsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private var _binding: FragmentMealDetailBinding? = null
@@ -59,7 +60,7 @@ class MealDetailFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.value.state.collect { state ->
                     if (state.isLoading) {
-
+                        binding.mealDetailProgressBar.visibility = View.VISIBLE
                     }
                     if (state.error.isNotBlank()) {
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
@@ -85,15 +86,12 @@ class MealDetailFragment : Fragment() {
                                 }
                             }
                         ).attach()
-
-
-
+                        delay(200)
+                        binding.mealDetailProgressBar.visibility = View.INVISIBLE
+                        binding.mealDetailGroup.visibility = View.VISIBLE
                     }
                 }
             }
         }
-
-
     }
-
 }

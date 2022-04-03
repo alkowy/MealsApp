@@ -18,7 +18,6 @@ class GetCategoriesUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val categories = repository.getAllCategories().categories.map { it.toCategory() }
-            delay(2000)
             emit(Resource.Success(categories))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "Unexpected error occurred."))

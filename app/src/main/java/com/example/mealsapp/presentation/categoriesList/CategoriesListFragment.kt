@@ -62,18 +62,17 @@ class CategoriesListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.value.state.collect { state ->
                     if (state.isLoading) {
-                        Log.d("CategoriesListFragment1", state.toString())
-                        binding.recyclerViewCategories.visibility = View.INVISIBLE
+                        binding.categoriesProgressBar.visibility = View.VISIBLE
+                        binding.categoriesGroup.visibility = View.INVISIBLE
                     }
                     if (state.error.isNotBlank()) {
-                        Log.d("CategoriesListFragment2", state.toString())
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.categories.isNotEmpty()){
-                        binding.categoriesProgressBar.visibility = View.GONE
-                        Log.d("CategoriesListFragment3", state.toString())
-                        binding.recyclerViewCategories.visibility = View.VISIBLE
                         categoriesAdapter.setCategories(state.categories)
                         rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+                        delay(300)
+                        binding.categoriesProgressBar.visibility = View.GONE
+                        binding.categoriesGroup.visibility = View.VISIBLE
                     }
                 }
             }
