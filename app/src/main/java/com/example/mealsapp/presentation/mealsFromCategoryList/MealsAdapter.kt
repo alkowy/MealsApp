@@ -41,7 +41,11 @@ class MealsAdapter (private var meals: List<MealModel>): RecyclerView.Adapter<Me
 
             itemBinding.mealNameTv.text = meal.name
             Log.d("mealadapter",meal.toString())
-            Glide.with(itemBinding.root).load(meal.image).centerInside().into(itemBinding.mealImageView)
+            Glide.with(itemBinding.root)
+                .load(meal.image)
+                .override(400)
+                .centerInside()
+                .into(itemBinding.mealImageView)
             setFadeAnimation(itemBinding.root)
             itemBinding.root.setOnClickListener {
                 Navigation.findNavController(itemBinding.root).navigate(R.id.action_mealsFromCategoryFragment_to_mealDetailFragment, bundleOf("meal_id" to meal.id))

@@ -24,22 +24,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Meal detail name"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="@+id/mealDetailImage"
         app:layout_constraintStart_toStartOf="@+id/mealDetailImage"
         app:layout_constraintTop_toBottomOf="@+id/mealDetailImage" />
-
-    <TextView
-        android:id="@+id/mealDetailInstructions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/mealDetailImage"
-        app:layout_constraintStart_toStartOf="@+id/mealDetailImage"
-        app:layout_constraintTop_toBottomOf="@+id/mealDetailName"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/mealDetailViewPager"
@@ -74,9 +64,5 @@
             android:layout_height="wrap_content"
             android:text="Tuesday" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,10 +69,11 @@ class CategoriesListFragment : Fragment() {
                         Log.d("CategoriesListFragment2", state.toString())
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.categories.isNotEmpty()){
+                        binding.categoriesProgressBar.visibility = View.GONE
                         Log.d("CategoriesListFragment3", state.toString())
                         binding.recyclerViewCategories.visibility = View.VISIBLE
                         categoriesAdapter.setCategories(state.categories)
-                        //rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+                        rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
                     }
                 }
             }

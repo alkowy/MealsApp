@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentMealsFromCategoryBinding
@@ -41,6 +42,7 @@ class MealsFromCategoryFragment : Fragment() {
         _binding = FragmentMealsFromCategoryBinding.inflate(layoutInflater)
         navController = findNavController()
 
+
         return binding.root
     }
 
@@ -53,6 +55,10 @@ class MealsFromCategoryFragment : Fragment() {
         val categoryName = arguments?.get("category_name") ?: ""
         viewModel.value.saveCurrentCategory(categoryName as String)
         viewModel.value.getCurrentCategory()
+
+        binding.toolbar.apply {
+            title = categoryName
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -68,7 +74,7 @@ class MealsFromCategoryFragment : Fragment() {
                         Log.d("MealsFromCategory3", state.toString())
                         binding.recyclerViewMealsInCategory.visibility = View.VISIBLE
                         mealsAdapter.setMeals(state.mealsFromCategory)
-                        //rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+                        rvMeals.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
                     }
                 }
             }

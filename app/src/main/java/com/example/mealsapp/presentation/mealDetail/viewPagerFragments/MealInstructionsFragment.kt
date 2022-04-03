@@ -1,6 +1,7 @@
 package com.example.mealsapp.presentation.mealDetail.viewPagerFragments
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class MealInstructionsFragment (mealDetail : MealDetailModel) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.instructionsPageTV.text = meal.strInstructions
+        binding.instructionsPageTV.movementMethod = ScrollingMovementMethod()
     }
 
     override fun onDestroy() {
