@@ -1,6 +1,7 @@
 package com.example.mealsapp.presentation.mealDetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,7 @@ class MealDetailFragment : Fragment() {
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     }
                     if (state.mealDetail?.strMeal != null) {
+                        fragmentList.clear()
                         val meal = state.mealDetail
                         Glide.with(binding.root)
                             .load(meal.strMealThumb)
@@ -74,7 +76,7 @@ class MealDetailFragment : Fragment() {
                         binding.mealDetailName.text = meal.strMeal
                         fragmentList.add(MealIngredientsFragment(meal))
                         fragmentList.add(MealInstructionsFragment(meal))
-                        pagerAdapter = ViewPagerAdapter(fragmentList,requireActivity().supportFragmentManager,lifecycle)
+                        pagerAdapter = ViewPagerAdapter(fragmentList,childFragmentManager,lifecycle)
                         binding.mealDetailViewPager.adapter = pagerAdapter
                         val tabLayout = binding.mealDetailsTabLayout
                         val tabLayoutMediator = TabLayoutMediator(
@@ -93,5 +95,10 @@ class MealDetailFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

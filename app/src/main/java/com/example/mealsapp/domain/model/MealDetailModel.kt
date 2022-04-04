@@ -82,10 +82,8 @@ data class MealDetailModel(
         for (i in ingredientsAndMeasuresList.indices step 2) {
             stringBuilder
                 .append(fullCircleSymbol)
-                .append(" ${ingredientsAndMeasuresList[i]} - ${ingredientsAndMeasuresList[i.inc()]} ")
+                .append(" ${ingredientsAndMeasuresList[i]} - ${ingredientsAndMeasuresList[i.inc()]}\n")
         }
-        stringBuilder.append(" $fullCircleSymbol")
-
         return stringBuilder.toString()
     }
 
