@@ -81,8 +81,7 @@ data class MealDetailModel(
         val stringBuilder = StringBuilder()
         for (i in ingredientsAndMeasuresList.indices step 2) {
             stringBuilder
-                .append(fullCircleSymbol)
-                .append(" ${ingredientsAndMeasuresList[i]} - ${ingredientsAndMeasuresList[i.inc()]}\n")
+                .append("$fullCircleSymbol ${ingredientsAndMeasuresList[i]} - ${ingredientsAndMeasuresList[i.inc()]}\n")
         }
         return stringBuilder.toString()
     }

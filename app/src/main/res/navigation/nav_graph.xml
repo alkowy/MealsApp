@@ -17,7 +17,13 @@
         android:id="@+id/mealDetailFragment"
         android:name="com.example.mealsapp.presentation.mealDetail.MealDetailFragment"
         android:label="fragment_meal_detail"
-        tools:layout="@layout/fragment_meal_detail" />
+        tools:layout="@layout/fragment_meal_detail" >
+        <action
+            android:id="@+id/action_mealDetailFragment_to_mealsFromCategoryFragment"
+            app:destination="@id/mealsFromCategoryFragment"
+            app:popUpTo="@id/mealsFromCategoryFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/mealsFromCategoryFragment"
         android:name="com.example.mealsapp.presentation.mealsFromCategoryList.MealsFromCategoryFragment"
