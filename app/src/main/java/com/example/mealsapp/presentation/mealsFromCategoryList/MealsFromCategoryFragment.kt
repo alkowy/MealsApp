@@ -1,5 +1,6 @@
 package com.example.mealsapp.presentation.mealsFromCategoryList
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -31,18 +32,11 @@ private lateinit var mealsState: MealsFromCategoryState
 class MealsFromCategoryFragment : Fragment() {
     private val viewModel = hiltNavGraphViewModels<MealsFromCategoryViewModel>(R.id.nav_graph)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("fragmentCallbak","oncreate")
-
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("fragmentCallbak","oncreateview")
 
         _binding = FragmentMealsFromCategoryBinding.inflate(layoutInflater)
         navController = findNavController()
@@ -53,7 +47,6 @@ class MealsFromCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("fragmentCallbak","onviewcreated")
 
         val rvMeals = binding.recyclerViewMealsInCategory
         mealsAdapter = MealsAdapter(ArrayList())
@@ -63,7 +56,7 @@ class MealsFromCategoryFragment : Fragment() {
         viewModel.value.saveCurrentCategory(categoryName as String)
         viewModel.value.getCurrentCategory()
 
-        binding.toolbarTitle.text = categoryName
+        binding.toolbar.title = categoryName
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 mealsAdapter.filter.filter(query)
@@ -75,21 +68,10 @@ class MealsFromCategoryFragment : Fragment() {
                 return true
             }
         })
-        binding.searchView.setOnCloseListener(SearchView.OnCloseListener {
-            val param = binding.searchView.getLayoutParams() as RelativeLayout.LayoutParams
-            param.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            //set layout params to cause layout update
-            binding.searchView.setLayoutParams(param)
-            false
-        })
-        binding.searchView.setOnSearchClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                val param = binding.searchView.getLayoutParams() as RelativeLayout.LayoutParams
-                param.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                //set layout params to cause layout update
-                binding.searchView.setLayoutParams(param)
-            }
-        })
+        binding.toolbar.setNavigationOnClickListener {
+            navController.navigate(R.id.action_mealsFromCategoryFragment_to_categoriesListFragment)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.value.state.collect { state ->
@@ -119,12 +101,11 @@ class MealsFromCategoryFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        Log.d("fragmentCallbak","ondestroy")
     }
 
     override fun onPause() {
         super.onPause()
-//        to clear the searchview after transitioning to detailed meal fragment
+        //to clear and collapse the searchview
         binding.searchView.setQuery("",false)
         binding.searchView.clearFocus()
         binding.searchView.isIconified = true

@@ -32,5 +32,10 @@
         <action
             android:id="@+id/action_mealsFromCategoryFragment_to_mealDetailFragment"
             app:destination="@id/mealDetailFragment" />
+        <action
+            android:id="@+id/action_mealsFromCategoryFragment_to_categoriesListFragment"
+            app:destination="@id/categoriesListFragment"
+            app:popUpTo="@id/categoriesListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
