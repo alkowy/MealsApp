@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentCategoriesListBinding
@@ -37,10 +38,6 @@ private lateinit var categoriesState: CategoriesState
 class CategoriesListFragment : Fragment() {
     private val viewModel = hiltNavGraphViewModels<CategoriesViewModel>(R.id.nav_graph)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +52,7 @@ class CategoriesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val rvCategories = binding.recyclerViewCategories
         categoriesAdapter = CategoriesAdapter(emptyList())
+        categoriesAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         rvCategories.adapter = categoriesAdapter
         rvCategories.layoutManager = LinearLayoutManager(context)
 
@@ -83,6 +81,4 @@ class CategoriesListFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-
 }

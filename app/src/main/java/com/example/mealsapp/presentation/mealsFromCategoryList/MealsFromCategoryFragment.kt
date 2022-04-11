@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentMealsFromCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +42,6 @@ class MealsFromCategoryFragment : Fragment() {
         _binding = FragmentMealsFromCategoryBinding.inflate(layoutInflater)
         navController = findNavController()
 
-
         return binding.root
     }
 
@@ -50,6 +50,7 @@ class MealsFromCategoryFragment : Fragment() {
 
         val rvMeals = binding.recyclerViewMealsInCategory
         mealsAdapter = MealsAdapter(ArrayList())
+        mealsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         rvMeals.adapter = mealsAdapter
         rvMeals.layoutManager = LinearLayoutManager(context)
         val categoryName = arguments?.get("category_name") ?: ""

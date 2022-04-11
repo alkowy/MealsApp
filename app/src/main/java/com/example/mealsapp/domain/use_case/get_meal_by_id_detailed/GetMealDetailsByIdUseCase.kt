@@ -6,6 +6,7 @@ import com.example.mealsapp.domain.model.MealDetailModel
 import com.example.mealsapp.domain.repository.MealRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
