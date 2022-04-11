@@ -83,12 +83,6 @@ class MealsFromCategoryFragment : Fragment() {
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.mealsFromCategory.isNotEmpty()) {
                         mealsAdapter.setMeals(state.mealsFromCategory)
-                        rvMeals.addItemDecoration(
-                            DividerItemDecoration(
-                                context,
-                                LinearLayoutManager.VERTICAL
-                            )
-                        )
                         delay(300)
                         binding.mealsFromCategoryProgressBar.visibility = View.INVISIBLE
                         binding.mealsFromCategoryGroup.visibility = View.VISIBLE

@@ -22,25 +22,19 @@ class MealsFromCategoryViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-
     private val _state = MutableStateFlow(MealsFromCategoryState())
     val state: StateFlow<MealsFromCategoryState> = _state
 
     init {
-        Log.d("MealsFromCategoryViewodel", "init block ${savedStateHandle.keys()}")
-
         savedStateHandle.get<String>("category_name")?.let { categoryName ->
-            Log.d("MealsFromCategoryViewodel", "savedstatehandle categoryname: $categoryName")
             getMealsByCategory(categoryName)
         }
     }
     fun saveCurrentCategory (categoryName : String){
-        Log.d("MealsFromCategoryViewodel", "saveCurrentCategory called")
         savedStateHandle.set("category_name",categoryName)
     }
     fun getCurrentCategory(){
         savedStateHandle.get<String>("category_name")?.let { categoryName ->
-            Log.d("MealsFromCategoryViewodel", "savedstatehandle categoryname: $categoryName")
             getMealsByCategory(categoryName)
         }
     }

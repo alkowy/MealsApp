@@ -67,7 +67,6 @@ class CategoriesListFragment : Fragment() {
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.categories.isNotEmpty()){
                         categoriesAdapter.setCategories(state.categories)
-                        rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
                         delay(300)
                         binding.categoriesProgressBar.visibility = View.GONE
                         binding.categoriesGroup.visibility = View.VISIBLE
