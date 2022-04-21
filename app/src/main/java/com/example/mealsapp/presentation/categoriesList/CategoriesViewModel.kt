@@ -29,7 +29,7 @@ class CategoriesViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value = CategoriesState(
-                        categories = result.data ?: emptyList()
+                        categories = result.data?.sortedBy { it.name } ?: emptyList()
                     )
                     Log.d("categoriesViewModel",result.data.toString())
                 }

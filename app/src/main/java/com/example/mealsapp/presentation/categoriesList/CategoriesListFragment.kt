@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentCategoriesListBinding
@@ -37,10 +38,6 @@ private lateinit var categoriesState: CategoriesState
 class CategoriesListFragment : Fragment() {
     private val viewModel = hiltNavGraphViewModels<CategoriesViewModel>(R.id.nav_graph)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +52,7 @@ class CategoriesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val rvCategories = binding.recyclerViewCategories
         categoriesAdapter = CategoriesAdapter(emptyList())
+        categoriesAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         rvCategories.adapter = categoriesAdapter
         rvCategories.layoutManager = LinearLayoutManager(context)
 
@@ -62,17 +60,16 @@ class CategoriesListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.value.state.collect { state ->
                     if (state.isLoading) {
-                        Log.d("CategoriesListFragment1", state.toString())
-                        binding.recyclerViewCategories.visibility = View.INVISIBLE
+                        binding.categoriesProgressBar.visibility = View.VISIBLE
+                        binding.categoriesGroup.visibility = View.INVISIBLE
                     }
                     if (state.error.isNotBlank()) {
-                        Log.d("CategoriesListFragment2", state.toString())
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                     } else if (state.categories.isNotEmpty()){
-                        Log.d("CategoriesListFragment3", state.toString())
-                        binding.recyclerViewCategories.visibility = View.VISIBLE
                         categoriesAdapter.setCategories(state.categories)
-                        //rvCategories.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
+                        delay(300)
+                        binding.categoriesProgressBar.visibility = View.GONE
+                        binding.categoriesGroup.visibility = View.VISIBLE
                     }
                 }
             }
@@ -83,6 +80,4 @@ class CategoriesListFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-
 }

@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".presentation.mealDetail.MealDetailFragment">
 
-    <ImageView
+    <ProgressBar
+        android:id="@+id/mealDetailProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/mealDetailImage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -14,6 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/roundedCornersImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,30 +35,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="Meal detail name"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="@+id/mealDetailImage"
         app:layout_constraintStart_toStartOf="@+id/mealDetailImage"
         app:layout_constraintTop_toBottomOf="@+id/mealDetailImage" />
 
-    <TextView
-        android:id="@+id/mealDetailInstructions"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/mealDetailViewPager"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/mealDetailImage"
-        app:layout_constraintStart_toStartOf="@+id/mealDetailImage"
-        app:layout_constraintTop_toBottomOf="@+id/mealDetailName"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." />
+        android:layout_height="0dp"
+        android:background="@color/secondaryLightColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealDetailsTabLayout" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mealDetailsTabLayout"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/gray"
+        android:background="@color/secondaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mealDetailInstructions" />
+        app:layout_constraintTop_toBottomOf="@+id/mealDetailName">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tuesday" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/mealDetailGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="mealDetailName,mealDetailsTabLayout,mealDetailViewPager,mealDetailImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

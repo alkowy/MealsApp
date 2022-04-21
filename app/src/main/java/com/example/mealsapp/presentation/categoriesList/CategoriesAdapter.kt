@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -38,10 +39,16 @@ class CategoriesAdapter (private var categories: List<CategoryModel>): RecyclerV
             itemBinding.categoryName.text = category.name
             Log.d("CategoriesAadapter",category.toString())
             Glide.with(itemBinding.root).load(category.image).centerInside().into(itemBinding.categoryImgView)
+            setFadeAnimation(itemBinding.root)
             itemBinding.root.setOnClickListener {
                 Log.d("CategoriesAdapter", "$category clicked")
                 Navigation.findNavController(itemBinding.root).navigate(R.id.action_categoriesListFragment_to_mealsFromCategoryFragment, bundleOf("category_name" to category.name))
             }
+        }
+        private fun setFadeAnimation(view: View) {
+            val anim = AlphaAnimation(0.0f, 1.0f)
+            anim.duration = 800
+            view.startAnimation(anim)
         }
 
 
